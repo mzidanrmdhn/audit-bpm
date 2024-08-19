@@ -2,24 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\QuestionsHelper;
 use App\Models\Target;
-use Illuminate\Http\Request;
+use App\Utils\Permission;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Helpers\QuestionsHelper;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class TargetController extends Controller
 {
     private $questionsHelper;
 
+    protected $permission = [
+        "view" => "can_view_target",
+        "save" => "can_save_target"
+    ];
+
     public function __construct()
     {
+
         $this->questionsHelper = new QuestionsHelper();
     }
 
     public function index(Request $request)
     {
+        (new Permission($this->permission ?? null))->can("view");
         $index = $request->query('index', 0);
         $allQuestions = collect($this->questionsHelper->flattenQuestions());
         $question = $allQuestions->map(function ($item) {
@@ -34,7 +42,7 @@ class TargetController extends Controller
             return $questions->count();
         });
 
-        $answers = Target::where('unit_id', Auth::user()->unit_id)->get()->keyBy('question_id');
+        $answers = Target::where('unit_id', 1)->get()->keyBy('question_id');
 
         return view('question.target', [
             'questions' => $question[$currentCriteria],
@@ -48,6 +56,7 @@ class TargetController extends Controller
 
     public function save(Request $request)
     {
+        (new Permission($this->permission ?? null))->can("save");
         $data = $request->all();
 
         if (isset($data['answers'])) {
@@ -57,7 +66,7 @@ class TargetController extends Controller
                         if ($subAnswer !== null) {
                             Target::updateOrCreate(
                                 [
-                                    'unit_id' => Auth::user()->unit_id,
+                                    'unit_id' => 1,
                                     'question_id' => $questionId . '-' . $subKey
                                 ],
                                 [
@@ -70,7 +79,7 @@ class TargetController extends Controller
                     if ($answer !== null) {
                         Target::updateOrCreate(
                             [
-                                'unit_id' => Auth::user()->unit_id,
+                                'unit_id' => 1,
                                 'question_id' => $questionId
                             ],
                             [

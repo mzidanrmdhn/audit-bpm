@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\QuestionsHelper;
-use App\Models\Achievement;
 use App\Models\Target;
+use App\Utils\Permission;
+use App\Models\Achievement;
 use Illuminate\Http\Request;
+use App\Helpers\QuestionsHelper;
 use Illuminate\Support\Facades\Auth;
 
 class AchievementController extends Controller
 {
     private $questionsHelper;
+
+    protected $permission = [
+        "view" => "can_view_achievement",
+        "save" => "can_save_achievement"
+    ];
 
     public function __construct()
     {
@@ -19,6 +25,7 @@ class AchievementController extends Controller
 
     public function index(Request $request)
     {
+        (new Permission($this->permission ?? null))->can("view");
         $index = $request->query('index', 0);
         $allQuestions = collect($this->questionsHelper->flattenQuestions());
         $question = $allQuestions->map(function ($item) {
@@ -33,8 +40,8 @@ class AchievementController extends Controller
             return $questions->count();
         });
 
-        $answers = Achievement::where('unit_id', Auth::user()->unit_id)->get()->keyBy('question_id');
-        $target = Target::where('unit_id', Auth::user()->unit_id)->get()->keyBy('question_id');
+        $answers = Achievement::where('unit_id', 1)->get()->keyBy('question_id');
+        $target = Target::where('unit_id', 1)->get()->keyBy('question_id');
 
         return view('question.achievement', [
             'questions' => $question[$currentCriteria],
@@ -49,6 +56,7 @@ class AchievementController extends Controller
 
     public function save(Request $request)
     {
+        (new Permission($this->permission ?? null))->can("save");
         $data = $request->all();
         $userId = 1;
 
@@ -59,7 +67,7 @@ class AchievementController extends Controller
                         if ($subAnswer !== null) {
                             Achievement::updateOrCreate(
                                 [
-                                    'unit_id' => Auth::user()->unit_id,
+                                    'unit_id' => 1,
                                     'question_id' => $questionId . '-' . $subKey
                                 ],
                                 [
@@ -72,7 +80,7 @@ class AchievementController extends Controller
                     if ($answer !== null) {
                         Achievement::updateOrCreate(
                             [
-                                'unit_id' => Auth::user()->unit_id,
+                                'unit_id' => 1,
                                 'question_id' => $questionId
                             ],
                             [

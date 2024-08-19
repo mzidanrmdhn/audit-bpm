@@ -69,6 +69,11 @@ class PerformanceUnitController extends Controller
     public function create(Request $request)
     {
         $latestIndexPoisition = PerformanceUnit::where('parent_id', null)->orderByDesc('index_position')->pluck('index_position');
+        $documentPath = null;
+        if ($request->hasFile('document')) {
+            $documentPath = $request->file('document')->store('documents', 'public');
+        }
+
         PerformanceUnit::create([
             'work_planning' => $request->work_planning,
             'unit_id' => Auth::user()->unit_id,
@@ -76,7 +81,7 @@ class PerformanceUnitController extends Controller
             'target' => $request->target,
             'achieve' => $request->achieve,
             'time_target' => $request->time_target,
-            'document' => $request->document,
+            'document' => $documentPath,
             'index_position' => collect($latestIndexPoisition)->first() + 1 ?? 1
         ]);
 
@@ -84,12 +89,23 @@ class PerformanceUnitController extends Controller
     }
 
     public function update(Request $request, int $id) {
+        $performanceUnit = PerformanceUnit::findOrFail($id);
+        $documentPath = $performanceUnit->document;
+        if ($request->hasFile('document')) {
+            // Delete the old document if it exists
+            if ($documentPath && \Storage::exists('public/' . $documentPath)) {
+                \Storage::delete('public/' . $documentPath);
+            }
+            // Store the new document
+            $documentPath = $request->file('document')->store('documents', 'public');
+        }
+
         PerformanceUnit::find($id)->update([
             'work_planning' => $request->work_planning,
             'target' => $request->target,
             'achieve' => $request->achieve,
             'time_target' => $request->time_target,
-            'document' => $request->document,
+            'document' => $documentPath,
         ]);
 
         return redirect()->route('performance-unit.create');
@@ -110,11 +126,8 @@ class PerformanceUnitController extends Controller
 
 
             DB::commit();
-
-            return redirect()->route('performance-unit.index')->with('success', 'Data berhasil dihapus');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('performance-unit.index')->with('error', 'Terjadi kesalahan saat menghapus data');
         }
     }
 }

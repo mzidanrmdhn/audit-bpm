@@ -10,7 +10,7 @@ class Achievement extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'unit_id',
         'question_id',
         'achieve_answer'
     ];

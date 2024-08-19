@@ -46,7 +46,25 @@ class DatabaseSeeder extends Seeder
             'can_create_unit_details',
             'can_view_unit_details',
             'can_update_unit_details',
-            'can_delete_unit_details'
+            'can_delete_unit_details',
+
+            'can_view_management_unit',
+            'can_store_management_unit',
+            'can_delete_management_unit',
+
+            'can_view_criteria',
+            'can_store_criteria',
+            'can_delete_criteria',
+
+            'can_view_sub_criteria',
+            'can_store_sub_criteria',
+            'can_delete_sub_criteria',
+
+            'can_view_target',
+            'can_save_target',
+
+            'can_view_achievement',
+            'can_save_achievement',
         ];
 
         foreach ($permissions as $permission) {
@@ -82,6 +100,13 @@ class DatabaseSeeder extends Seeder
         foreach (DB::table('permissions')->pluck('id') as $permissionID) {
             RolePermission::create([
                 'role_id' => 1,
+                'permission_id' => $permissionID
+            ]);
+        }
+
+        foreach (DB::table('permissions')->pluck('id') as $permissionID) {
+            RolePermission::create([
+                'role_id' => 2,
                 'permission_id' => $permissionID
             ]);
         }

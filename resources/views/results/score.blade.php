@@ -86,6 +86,7 @@
                 @endforeach
             </tbody>
         </table>
+        <input type="hidden" name="" class="bg-cerulean">
 
     </div>
     @include('results.score-script')

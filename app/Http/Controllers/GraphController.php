@@ -22,7 +22,7 @@ class GraphController extends Controller
         session(['unit_id' => $unit_id]);
 
         $allQuestions = collect($this->questionsHelper->flattenQuestions());
-        $scores = Score::where('unit_id', $unit_id)->get()->keyBy('question_id');
+        $scores = Score::where('unit_id', 1)->get()->keyBy('question_id');
         $groupedQuestions = $allQuestions->map(function ($item) use ($scores) {
             $questionId = $item['code'];
             return collect($item)
@@ -112,7 +112,7 @@ class GraphController extends Controller
     {
         $allQuestions = collect($this->questionsHelper->flattenQuestions());
         $unit_id = session('unit_id');
-        $scores = Score::where('unit_id', $unit_id)->get()->keyBy('question_id');
+        $scores = Score::where('unit_id', 1)->get()->keyBy('question_id');
 
         $groupedQuestions = $allQuestions->map(function ($item) use ($scores) {
             $questionId = $item['code'];

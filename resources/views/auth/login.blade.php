@@ -2,11 +2,11 @@
 @section('content')
     <div class="flex flex-wrap w-full bg-white">
         <div class="flex flex-col w-full lg:w-1/2">
-            {{-- <div class="flex justify-center pt-12 lg:justify-start lg:pl-12 lg:-mb-24">
-			<a href="#" class="p-4 text-xl font-bold text-whiteSmoke">
-				BPM
+            <div class="flex justify-center pt-12 lg:justify-start lg:pl-12 lg:-mb-24">
+			<a href="#" class="p-4 text-2xl font-bold text-caribbean">
+				Audit
 			</a>
-		</div> --}}
+		</div>
             <div class="flex flex-col justify-center px-8 pt-8 my-auto lg:justify-start lg:pt-0 lg:px-24">
                 <p class="text-3xl text-center font-bold text-jet underline underline-offset-4 decoration-teal">
                     Selamat Datang
@@ -27,7 +27,7 @@
                                 placeholder="Password">
                         </div>
                     </div>
-                    <button type="submit" class="bg-caribbean text-white hover:bg-white hover:text-caribbean rounded-lg p-2">Masuk</button>
+                    <button type="submit" class="bg-caribbean text-white hover:bg-white hover:text-caribbean hover:border hover:border-caribbean rounded-lg p-2">Masuk</button>
                 </form>
             </div>
         </div>

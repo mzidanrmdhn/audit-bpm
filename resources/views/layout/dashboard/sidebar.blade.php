@@ -1,5 +1,5 @@
 <aside
-    class="fixed left-0 top-0 w-64 z-40 h-screen md:static transition-transform -translate-x-full bg-caribbean border-r md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+    class="fixed overflow-y-auto left-0 top-0 w-64 z-40 h-screen md:static transition-transform -translate-x-full bg-caribbean border-r md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
     aria-label="Sidenav" id="drawer-navigation">
     <div class="items-center justify-center px-6 py-5">
         <a href="" class="flex items-center justify-center">
@@ -114,11 +114,8 @@
             <li>
                 <a href="{{ route('management-user.index') }}"
                     class="{{ request()->is('manajemen-pengguna') ? 'bg-gray-100 text-jet' : 'text-white'}} flex items-center p-2 text-sm font-medium rounded-lg dark:text-white hover:bg-gray-100 hover:text-jet dark:hover:bg-gray-700 group">
-                    <svg aria-hidden="true"
-                        class="w-5 h-5 transition duration-75 dark:text-gray-400 group-hover:text-jet dark:group-hover:text-jet"
-                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                        <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                    <svg class="w-6 h-6 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
                     </svg>
                     <span class="ml-3">Manajemen Pengguna</span>
                 </a>

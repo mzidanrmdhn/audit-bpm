@@ -28,7 +28,7 @@
                 </tr>
             </table>
         </div>
-        <form action="{{ url('performance-unit', ['id' => request()->edit_id]) }}" method="POST">
+        <form action="{{ url('performance-unit', ['id' => request()->edit_id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @if (request()->has('edit_id'))
                 @method('PUT')
@@ -77,7 +77,10 @@
                                 <input type="text" name="time_target" class="bg-transparent h-8 w-full border-0 border-b text-sm focus:rounded-lg focus:border-0 focus:ring-caribbean" value="{{ $item->time_target }}">
                             </td>
                             <td class="border border-gray-400 p-2 w-1/5">
-                                <input type="file" name="document" class="bg-gray-50 w-full border border-gray-300 text-xs text-jet rounded-lg cursor-pointer" value="{{ $item->document }}">
+                                <input type="file" name="document" class="bg-gray-50 w-full border border-gray-300 text-xs text-jet rounded-lg cursor-pointer">
+                                @if ($item->document)
+                                    <a href="{{ asset('storage/' . $item->document) }}" class="text-blue-500" target="_blank">View Document</a>
+                                @endif
                             </td>
                             <td class="border border-gray-400 p-2"></td>
                             <td class="border border-gray-400 p-2"></td>
@@ -94,7 +97,11 @@
                             <td class="border border-gray-400 p-2 text-center">{{ $item->target }}</td>
                             <td class="border border-gray-400 p-2 text-center">{{ $item->achieve }}</td>
                             <td class="border border-gray-400 p-2 text-center">{{ $item->time_target }}</td>
-                            <td class="border border-gray-400 p-2 text-center">{{ $item->document }}</td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                @if ($item->document)
+                                    <a href="{{ asset('storage/' . $item->document) }}" class="text-blue-500" target="_blank">View Document</a>
+                                @endif
+                            </td>
                             <td class="border border-gray-400 p-2 text-center"></td>
                             <td class="border border-gray-400 p-2 text-center"></td>
                             <td class="border border-gray-400 p-2 text-center"></td>
@@ -108,10 +115,6 @@
                                     <option value="hapus_id">Hapus</option>
                                 </select>
                             </td>
-                            <form id="delete-form-{{ $item->id }}" action="{{ route('performance-unit.delete', $item->id) }}" method="POST" style="display: none;">
-                                @csrf
-                                @method('DELETE')
-                            </form>
                         </tr>
                     @endif
                 @endforeach
@@ -151,11 +154,15 @@
 
     <script>
         function actions(event, id) {
+            console.log(id)
             // location.href = 'performance-unit?' + event.value + '=' + id
             var action = event.value;
             if (action === 'hapus_id') {
                 if (confirm('Yakin ingin menghapus?')) {
-                    document.getElementById('delete-form-' + id).submit();
+                    axios.delete(`performance-unit/${id}`)
+                        .then(function() {
+                            location.reload()
+                        })
                 }
             } else if (action === 'edit_id') {
                 location.href = 'performance-unit?' + action + '=' + id;

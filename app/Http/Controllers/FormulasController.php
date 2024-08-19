@@ -34,7 +34,7 @@ class FormulasController extends Controller
         $questions = collect($this->question->flattenQuestions());
         $questionCode = $questions->pluck('code');
         $predAccreditation = $this->predAccreditation();
-        $score = Score::where('unit_id', $unit_id)->get()->keyBy('question_id');
+        $score = Score::where('unit_id', 1)->get()->keyBy('question_id');
 
         $displayedCodes = [];
         $tableData = [];
@@ -126,8 +126,8 @@ class FormulasController extends Controller
     {
         $formulas = $this->formula->getFormula();
         $unit_id = Session('unit_id');
-        $targetAnswers = Target::where('unit_id', $unit_id)->get()->keyBy('question_id');
-        $achieveAnswers = Achievement::where('unit_id', $unit_id)->get()->keyBy('question_id');
+        $targetAnswers = Target::where('unit_id', 1)->get()->keyBy('question_id');
+        $achieveAnswers = Achievement::where('unit_id', 1)->get()->keyBy('question_id');
 
         $targetResults = $this->processFormula($formulas, $targetAnswers);
         $achieveResults = $this->processFormula($formulas, $achieveAnswers);
@@ -141,7 +141,7 @@ class FormulasController extends Controller
             $achieveValue = Arr::get($achieveResults, $key);
             Score::updateOrCreate(
                 [
-                    'unit_id' => $unit_id,
+                    'unit_id' => 1,
                     'question_id' => $key,
                 ],
                 [
@@ -265,7 +265,7 @@ class FormulasController extends Controller
         foreach ($questionCode as $question) {
             $weightQuestion = $this->question->getWeight($question);
             $unit_id = Session('unit_id');
-            $score = Score::where('question_id', $question)->where('unit_id', $unit_id)->first();
+            $score = Score::where('question_id', $question)->where('unit_id', 1)->first();
 
             if ($score) {
                 $achieveScore = $score->achieve_score;

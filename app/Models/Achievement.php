@@ -12,6 +12,11 @@ class Achievement extends Model
     protected $fillable = [
         'unit_id',
         'question_id',
-        'achieve_answer'
+        'achievement_answer'
     ];
+
+    public function question()
+    {
+        return $this->belongsTo(Questions::class);
+    }
 }

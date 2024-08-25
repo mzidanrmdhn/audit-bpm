@@ -57,7 +57,7 @@ class ManagementUserController extends Controller
     }
 
     public function update(Request $request, $id) {
-        
+
         (new Permission($this->permission ?? null))->can("update");
         $field = collect([
             'name' => $request->name,
@@ -65,9 +65,9 @@ class ManagementUserController extends Controller
             'unit_id' => $request->unit_id,
             'role_id' => $request->role_id
         ]);
-        if ($id && $request->has('password')) {
-            $field->put('password', $request->password);
-        }
+        // if ($id && $request->has('password')) {
+        //     $field->put('password', $request->password);
+        // }
 
         User::find($id)->update(
             $field->toArray()

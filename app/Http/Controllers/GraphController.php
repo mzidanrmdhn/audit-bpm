@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\QuestionsHelper;
 use App\Models\Score;
+use App\Models\Questions;
 use Illuminate\Http\Request;
+use App\Helpers\QuestionsHelper;
 use Illuminate\Support\Facades\Auth;
 
 class GraphController extends Controller
@@ -18,21 +19,33 @@ class GraphController extends Controller
 
     public function index(Request $request)
     {
-        $unit_id = $request->unit_id;
+        $unit_id = Auth::user()->unit_id;
         session(['unit_id' => $unit_id]);
 
+<<<<<<< HEAD
         $allQuestions = collect($this->questionsHelper->flattenQuestions());
         $scores = Score::where('unit_id', 1)->get()->keyBy('question_id');
         $groupedQuestions = $allQuestions->map(function ($item) use ($scores) {
+=======
+        $questions = Questions::with('subCriteria')->get();
+        $questionCode = Questions::query()->pluck('code');
+        $score = Score::where('unit_id', $unit_id)->with('question')->get()->map(function ($score) {
+            return collect($score)->put('code', $score->question->code);
+        })->keyBy('code');
+
+        $groupedQuestions = $questions->map(function ($item) use ($score) {
+>>>>>>> upstream/main
             $questionId = $item['code'];
             return collect($item)
                 ->put('code', $item['code'])
-                ->put('score', $scores->has($questionId) ? $scores->get($questionId)->achieve_score : 0);
+                ->put('achieve_score', $score->has($questionId) ? $score->get($questionId)['achieve_score'] : 0)
+                ->put('criteria', $item->subCriteria->criteria->name);
         })->groupBy('criteria');
 
         $tableData = $groupedQuestions->map(function ($questions, $criteria) {
-            $totalScore = $questions->sum('score');
-            $averageScore = number_format($questions->avg('score'), 2);
+
+            $totalScore = $questions->sum('achieve_score');
+            $averageScore = number_format($questions->avg('achieve_score'), 2);
 
             if ($averageScore == 4) {
                 $sebutan = 'Sangat Baik';
@@ -63,16 +76,15 @@ class GraphController extends Controller
             ];
         })->values()->all();
 
-        $saranPerbaikan = $allQuestions->filter(function ($question) use ($scores) {
-            $score = $scores->has($question['code']) ? $scores->get($question['code'])->achieve_score : 0;
+        $saranPerbaikan = $questions->filter(function ($question) use ($score) {
+            $score = $score->has($question['code']) ? $score->get($question['code'])['achieve_score'] : 0;
             return $score <= 2;
-        })->map(function ($question) use ($scores) {
-            $score = $scores->has($question['code']) ? $scores->get($question['code'])->achieve_score : 0;
-            $questionText = $question['question'] ?? 'N/A';
-            $mainQuestion = isset($question['question']['main']) ? $question['question']['main'] : $questionText;
+        })->map(function ($question) use ($score) {
+            $score = $score->has($question['code']) ? $score->get($question['code'])['achieve_score'] : 0;
+            $questionText = $question['main_question'] ?? 'N/A';
             return [
                 'question_code' => $question['code'],
-                'question_text' => $mainQuestion,
+                'question_text' => $questionText,
                 'score' => number_format($score, 2),
             ];
         })->values()->all();
@@ -110,16 +122,26 @@ class GraphController extends Controller
 
     public function getChartData()
     {
+<<<<<<< HEAD
         $allQuestions = collect($this->questionsHelper->flattenQuestions());
         $unit_id = session('unit_id');
         $scores = Score::where('unit_id', 1)->get()->keyBy('question_id');
+=======
+        // $allQuestions = collect($this->questionsHelper->flattenQuestions());
+        $questions = Questions::all();
+        $unit_id = Auth::user()->unit_id;
+        $scores = Score::where('unit_id', $unit_id)->get()->keyBy('question_id');
+>>>>>>> upstream/main
 
-        $groupedQuestions = $allQuestions->map(function ($item) use ($scores) {
+        $score = Score::where('unit_id', $unit_id)->with('question')->get()->map(function ($score) {
+            return collect($score)->put('code', $score->question->code);
+        })->keyBy('code');
+        $groupedQuestions = $questions->map(function ($item) use ($score) {
             $questionId = $item['code'];
             return collect($item)
                 ->put('code', $item['code'])
-                ->put('weight', $this->questionsHelper->getWeight($item['code']))
-                ->put('score', $scores->has($questionId) ? $scores->get($questionId)->achieve_score : 0);
+                ->put('achieve_score', $score->has($questionId) ? $score->get($questionId)['achieve_score'] : 0)
+                ->put('criteria', $item->subCriteria->criteria->name);
         })->groupBy('criteria');
 
         $criteriaData = $groupedQuestions->map(function ($questions, $criteria) {
@@ -129,7 +151,7 @@ class GraphController extends Controller
                 'datasets' => [
                     [
                         'label' => $criteria,
-                        'data' => $questions->pluck('score')->toArray(), // Menggunakan skor yang diambil
+                        'data' => $questions->pluck('achieve_score')->toArray(), // Menggunakan skor yang diambil
                         'backgroundColor' => 'rgba(54, 162, 235, 0.2)',
                         'borderColor' => 'rgb(54, 162, 235)',
                         'pointBackgroundColor' => 'rgb(54, 162, 235)',
@@ -149,7 +171,7 @@ class GraphController extends Controller
                 [
                     'label' => 'Peta Capaian',
                     'data' => $groupedQuestions->flatMap(function ($questions) {
-                        return $questions->pluck('score');
+                        return $questions->pluck('achieve_score');
                     })->toArray(),
                     'backgroundColor' => 'rgba(54, 162, 235, 0.2)',
                     'borderColor' => 'rgb(54, 162, 235)',

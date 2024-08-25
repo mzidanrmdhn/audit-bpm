@@ -15,4 +15,9 @@ class Score extends Model
         'target_score',
         'achieve_score'
     ];
+
+    public function question()
+    {
+        return $this->belongsTo(Questions::class);
+    }
 }

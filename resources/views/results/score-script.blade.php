@@ -1,6 +1,6 @@
 <script>
     $(document).ready(function() {
-        var table = $('#example').DataTable({
+        var table = $('#user').DataTable({
             processing: false,
             serverSide: false,
             responsive: true,
@@ -17,13 +17,40 @@
                 '<"flex justify-between items-center"<"flex items-center justify-start mt-4"i><"flex items-center justify-end mt-4"p>>',
         })
 
-        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        const criteriaDropdown = document.getElementById('criteria_id');
+        const tableRows = document.querySelectorAll('#user tbody tr');
+        criteriaDropdown.addEventListener('change', function () {
+            const selectedCriteria = this.value;
+
+            tableRows.forEach(row => {
+                const rowCriteria = row.getAttribute('data-criteria');
+
+                if (selectedCriteria === rowCriteria || !selectedCriteria) {
+                    row.style.display = ''; // Menampilkan baris
+                } else {
+                    row.style.display = 'none'; // Menyembunyikan baris
+                }
+            });
+        });
+
+        const unitDropdown = document.getElementById('unit_id');
+
+        unitDropdown.addEventListener('change', function () {
+            const selectedUnitId = this.value;
+            const currentUrl = new URL(window.location.href);
+
+            if (selectedUnitId) {
+                currentUrl.searchParams.set('unit_id', selectedUnitId);
+            } else {
+                currentUrl.searchParams.delete('unit_id');
+            }
+
+            window.location.href = currentUrl.toString();
+        });
+
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
         var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-            return new bootstrap.Popover(popoverTriggerEl)
+            return new bootstrap.Popover(popoverTriggerEl);
         })
     })
-
-    {{--  document.addEventListener('DOMContentLoaded', function () {
-
-    });  --}}
 </script>

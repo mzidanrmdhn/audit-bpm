@@ -20,8 +20,9 @@ class Permission
         $this->action = $action;
 
         $user = User::where("id", Auth::id())->first();
-        
+
         if (!$user) {
+            // return view('auth.login');
             throw new Exception("Unauthorized", 401);
         }
 

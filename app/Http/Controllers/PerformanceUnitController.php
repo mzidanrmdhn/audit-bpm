@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\PerformanceUnit;
 use App\Models\Unit;
+use Diatria\LaravelInstant\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PerformanceUnitController extends Controller
 {
@@ -18,11 +20,13 @@ class PerformanceUnitController extends Controller
         $unit = Unit::where('id', Auth::user()->unit_id)->first();
         $data = PerformanceUnit::where('unit_id', Auth::user()->unit_id)->where('year', $selectedYear)->orderBy('index_position')->get();
         $years = range(date('Y'), date('Y') - 5);
+        $roleName = Role::find(Auth::user()->role_id);
         return view('performance-unit.index', [
             'data' => $data,
             'unit' => $unit,
             'selectedYear' => $selectedYear,
-            'years' => $years
+            'years' => $years,
+            'role_name' => $roleName->name
         ]);
     }
 
@@ -73,7 +77,10 @@ class PerformanceUnitController extends Controller
         if ($request->hasFile('document')) {
             $documentPath = $request->file('document')->store('documents', 'public');
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/main
         PerformanceUnit::create([
             'work_planning' => $request->work_planning,
             'unit_id' => Auth::user()->unit_id,
@@ -93,8 +100,13 @@ class PerformanceUnitController extends Controller
         $documentPath = $performanceUnit->document;
         if ($request->hasFile('document')) {
             // Delete the old document if it exists
+<<<<<<< HEAD
             if ($documentPath && \Storage::exists('public/' . $documentPath)) {
                 \Storage::delete('public/' . $documentPath);
+=======
+            if ($documentPath && Storage::exists('public/' . $documentPath)) {
+                Storage::delete('public/' . $documentPath);
+>>>>>>> upstream/main
             }
             // Store the new document
             $documentPath = $request->file('document')->store('documents', 'public');

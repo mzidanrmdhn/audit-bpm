@@ -79,5 +79,7 @@
     </div>
 
     <input type="hidden" name="" class="bg-emerald-800">
+    <input type="hidden" name="" class="bg-[#FF9800]">
+
     @include('results.graph-script')
 @endsection

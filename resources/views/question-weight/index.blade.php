@@ -30,7 +30,7 @@
                             <div class="flex flex-row gap-2 justify-center">
                                 <button data-modal-target="question-weight-modal" data-modal-toggle="question-weight-modal"
                                     class="px-4 py-2 text-sm text-center font-medium inline-flex items-center rounded-md border border-amber bg-amber text-white hover:bg-white hover:text-amber hover:border hover:border-amber"
-                                    onclick="openModal('edit', {{ $item->id }}, '{{ $item->name }}')">Edit</button>
+                                    onclick="openModal('edit', {{ $item->id }}, '{{ $item->weight }}', '{{ $item->question_id }}')">Edit</button>
                                 <form action="{{ route('question-weight.destroy', $item->id) }}" method="POST"
                                     onsubmit="return confirm('Apakah Anda yakin ingin menghapus unit ini?');">
                                     @csrf
@@ -70,15 +70,21 @@
                     <form id="question-weight-form" class="space-y-4" action="" method="POST">
                         @csrf
                         <div>
-                            <label for="code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode Pertanyaan</label>
-                            <select name="code" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                @foreach ($questions as $question)
-                                {{--  {{ $question }}  --}}
-                                <option value="{{ $question->id }}">
-                                    {{ $question->code }}
-                                </option>
+                            <label for="question_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode Pertanyaan</label>
+                            <select id="question_id" name="question_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                @foreach ($questions as $item)
+                                    @if($item['weights'] === null)
+                                        <option value="{{ $item['id'] }}">
+                                            {{ $item['code'] }}
+                                        </option>
+                                    @else
+                                        <option value="{{ $item['id'] }}" disabled>
+                                            {{ $item['code'] }}
+                                        </option>
+                                    @endif
                                 @endforeach
                             </select>
+                            <input type="hidden" id="hidden_question_id" name="question_id_hidden">
                         </div>
                         <div>
                             <label for="weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bobot</label>

@@ -14,4 +14,9 @@ class Target extends Model
         'question_id',
         'target_answer'
     ];
+
+    public function question()
+    {
+        return $this->belongsTo(Questions::class);
+    }
 }

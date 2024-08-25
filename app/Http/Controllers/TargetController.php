@@ -2,8 +2,18 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use App\Models\Target;
 use App\Utils\Permission;
+=======
+use App\Helpers\QuestionsHelper;
+use App\Models\Achievement;
+use App\Models\Criteria;
+use App\Models\Questions;
+use App\Models\Target;
+use App\Utils\Permission;
+use Illuminate\Http\Request;
+>>>>>>> upstream/main
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Helpers\QuestionsHelper;
@@ -29,28 +39,35 @@ class TargetController extends Controller
     {
         (new Permission($this->permission ?? null))->can("view");
         $index = $request->query('index', 0);
-        $allQuestions = collect($this->questionsHelper->flattenQuestions());
-        $question = $allQuestions->map(function ($item) {
-            return collect($item)->put('code', $item['code'],)
-            ->put('weight', $this->questionsHelper->getWeight($item['code']));
-        })->groupBy('criteria');
 
-        $criteriaKeys = $question->keys()->all();
-        $currentCriteria = $criteriaKeys[$index];
-
-        $questionCounts = $question->map(function ($questions) {
-            return $questions->count();
+        $questions = Questions::with('inputs', 'choices', 'weights', 'subCriteria')->get();
+        $groupedQuestion = $questions->groupBy(function ($question) {
+            return $question->subCriteria->criteria->name;
         });
 
+<<<<<<< HEAD
         $answers = Target::where('unit_id', 1)->get()->keyBy('question_id');
+=======
+        $criteriaKeys = Criteria::all();
+        $currentCriteria = $criteriaKeys[$index];
+
+        $answers = Achievement::where('unit_id', Auth::user()->unit_id)->get()->keyBy('question_id');
+        $target = Target::where('unit_id', Auth::user()->unit_id)->get()->keyBy('question_id');
+
+        $parsedAnswers = [];
+        foreach ($target as $answer) {
+            $parsedAnswers[$answer->question_id] = json_decode($answer->target_answer, true);
+        }
+>>>>>>> upstream/main
 
         return view('question.target', [
-            'questions' => $question[$currentCriteria],
+            'questions' => $groupedQuestion[$currentCriteria->name],
             'currentCriteria' => $currentCriteria,
-            'questionCounts' => $questionCounts,
+            'parsedAnswers' => $parsedAnswers,
             'criteriaKeys' => $criteriaKeys,
             'currentIndex' => $index,
             'answers' => $answers,
+            'target' => $target,
         ]);
     }
 

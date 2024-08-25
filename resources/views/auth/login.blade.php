@@ -3,7 +3,11 @@
     <div class="flex flex-wrap w-full bg-white">
         <div class="flex flex-col w-full lg:w-1/2">
             <div class="flex justify-center pt-12 lg:justify-start lg:pl-12 lg:-mb-24">
+<<<<<<< HEAD
 			<a href="#" class="p-4 text-2xl font-bold text-caribbean">
+=======
+			<a href="#" class="p-4 text-xl font-bold text-whiteSmoke">
+>>>>>>> upstream/main
 				Audit
 			</a>
 		</div>

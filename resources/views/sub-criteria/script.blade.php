@@ -18,28 +18,33 @@
         })
     })
 
-    function openModal(action, id = null, name = null) {
-        const modalTitle = document.getElementById('modal-title');
-        const subCriteriaForm = document.getElementById('sub-criteria-form');
-        const nameInput = document.getElementById('name');
+    function openModal(action, id = null, name = null, criteriaId = null) {
+        const modalTitle = document.getElementById('modal-title')
+        const subCriteriaForm = document.getElementById('sub-criteria-form')
+        const nameInput = document.getElementById('name')
+        const criteriaSelect = document.getElementById('criteria_id')
 
         if (action === 'add') {
-            modalTitle.textContent = 'Tambah Data Sub Kriteria';
-            subCriteriaForm.action = "{{ route('sub-criteria.store') }}";
-            nameInput.value = '';
+            modalTitle.textContent = 'Tambah Data Sub Kriteria'
+            subCriteriaForm.action = "{{ route('sub-criteria.store') }}"
+            nameInput.value = ''
+            criteriaSelect.value = ''
         } else if (action === 'edit') {
-            modalTitle.textContent = 'Edit Data Sub Kriteria';
-            subCriteriaForm.action = `{{ route('sub-criteria.store') }}/${id}`;
-            nameInput.value = name;
+            modalTitle.textContent = 'Edit Data Sub Kriteria'
+            subCriteriaForm.action = `{{ route('sub-criteria.store') }}/${id}`
+            nameInput.value = name
+            if (criteriaId !== null) {
+                criteriaSelect.value = criteriaId
+            }
         }
 
         document.querySelectorAll('[data-modal-hide="sub-criteria-modal"]').forEach(element => {
             element.addEventListener('click', () => {
-                document.getElementById('sub-criteria-modal').classList.add('hidden');
-            });
-        });
+                document.getElementById('sub-criteria-modal').classList.add('hidden')
+            })
+        })
 
-        document.getElementById('sub-criteria-modal').classList.remove('hidden');
+        document.getElementById('sub-criteria-modal').classList.remove('hidden')
     }
 
 </script>

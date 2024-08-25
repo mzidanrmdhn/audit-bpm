@@ -44,8 +44,24 @@
         </div>
     </div>
 
+    <div class="grid grid-cols-6 gap-3 mt-4">
+        <select name="criteria_id" id="criteria_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option value="" disabled selected>Tampilkan Berdasarkan Kriteria</option>
+            @foreach ($criteria as $item)
+                <option value="{{ $item->id }}">{{ $item->name }}</option>
+            @endforeach
+        </select>
+        <select id="unit_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option value="" disabled selected>Pilih Unit</option>
+            @foreach ($units as $unit)
+                <option value="{{ $unit->id }}" {{ request('unit_id') == $unit->id ? 'selected' : '' }}>
+                    {{ $unit->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
     <div class="bg-white p-4 mt-3 rounded-lg shadow overflow-x-auto">
-        <table id="example" class="w-screen text-center">
+        <table id="user" class="w-screen text-center">
             <thead class="">
                 <tr>
                     <th>Kode Pertanyaan</th>
@@ -57,31 +73,31 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($tableData as $data)
-                    <tr class="hover:bg-gray-50">
+                @foreach ($tableData as $item)
+                    <tr data-criteria="{{ $item['criteria_id'] }}" class="hover:bg-gray-50">
                         <td class="text-center">
-                            <p data-popover-target="popover-question-{{ $data['code'] }}">{{ $data['code'] }}</p>
-                            <div id="popover-question-{{ $data['code'] }}" data-popover role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0">
+                            <p data-popover-target="popover-question-{{ $item['code'] }}">{{ $item['code'] }}</p>
+                            <div id="popover-question-{{ $item['code'] }}" data-popover role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0">
                                 <div class="px-3 py-2">
-                                    <p class="whitespace-pre-wrap">{{ $data['question'] }}</p>
+                                    <p class="whitespace-pre-wrap">{{ $item['question'] }}</p>
                                 </div>
                                 <div data-popper-arrow></div>
                             </div>
                         </td>
-                        {{--  <td><p class="text-left whitespace-pre-wrap">{{ $data['question'] }}</p></td>  --}}
-                        <td class="text-center">{{ $data['target_score'] }}</td>
-                        <td class="text-center">{{ $data['achieve_score'] }}</td>
+                        {{--  <td><p class="text-left whitespace-pre-wrap">{{ $item['question'] }}</p></td>  --}}
+                        <td class="text-center">{{ $item['target_score'] }}</td>
+                        <td class="text-center">{{ $item['achieve_score'] }}</td>
                         <td class="text-center">
-                            <span class="bg-{{ $data['sebutan_class'] }} p-2 text-white text-sm rounded-lg w-full inline-block">
-                                {{ $data['sebutan'] }}
+                            <span class="bg-{{ $item['sebutan_class'] }} p-2 text-white text-sm rounded-lg w-full inline-block">
+                                {{ $item['sebutan'] }}
                             </span>
                         </td>
                         <td class="text-center">
-                            <span class="bg-{{ $data['ketercapaian_class'] }} p-2 text-white text-sm rounded-lg w-full inline-block">
-                                {{ $data['ketercapaian'] }}
+                            <span class="bg-{{ $item['ketercapaian_class'] }} p-2 text-white text-sm rounded-lg w-full inline-block">
+                                {{ $item['ketercapaian'] }}
                             </span>
                         </td>
-                        <td class="text-center">{{ $data['pred_value'] }}</td>
+                        <td class="text-center">{{ $item['pred_value'] }}</td>
                     </tr>
                 @endforeach
             </tbody>

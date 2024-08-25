@@ -41,7 +41,7 @@ Route::get('/target', [TargetController::class, 'index'])->name('target.index');
 Route::post('/target', [TargetController::class, 'save'])->name('target.save');
 
 // Score
-Route::get('/skor', [FormulasController::class, 'index']);
+Route::get('/skor', [FormulasController::class, 'index'])->name('skor.index');
 Route::get('/generate', [FormulasController::class, 'generate'])->name('formula.generate');
 
 // Graph
@@ -52,6 +52,7 @@ Route::get('/get-grafik-data', [GraphController::class, 'getChartData']);
 Route::get('/data-pertanyaan', [QuestionController::class, 'index'])->name('questions.index');
 Route::get('/pertanyaan/{id?}', [QuestionController::class, 'edit'])->name('questions.edit');
 Route::post('/pertanyaan/{id?}', [QuestionController::class, 'store'])->name('questions.store');
+Route::delete('/pertanyaan/{id}', [QuestionController::class, 'destroy'])->name('question.destroy');
 Route::get('/storeDumpQuestion', [QuestionController::class, 'storeDumpData']);
 
 Route::get('/storeDumpWeight', [WeightController::class, 'storeDataDump']);

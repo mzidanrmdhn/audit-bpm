@@ -43,7 +43,7 @@
                                 <a href="{{ route('questions.edit', $item->id) }}" class="px-4 py-2 text-sm text-center font-medium inline-flex items-center rounded-md border border-amber bg-amber text-white hover:bg-white hover:text-amber hover:border hover:border-amber">
                                     Edit
                                 </a>
-                                <form action="{{ route('management-unit.destroy', $item->id) }}" method="POST"
+                                <form action="{{ route('question.destroy', $item->id) }}" method="POST"
                                     onsubmit="return confirm('Apakah Anda yakin ingin menghapus unit ini?');">
                                     @csrf
                                     @method('DELETE')

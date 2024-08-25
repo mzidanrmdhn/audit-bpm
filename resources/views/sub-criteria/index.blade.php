@@ -9,6 +9,7 @@
             <p>Tambah Sub Kriteria</p>
         </button>
     </div>
+    {{--  {{ $data->criteria }}  --}}
 
     <div class="bg-white p-4 mt-3 rounded-lg shadow overflow-x-auto">
         <table id="sub-criteria" class="display">
@@ -30,9 +31,9 @@
                             <div class="flex flex-row gap-2 justify-center">
                                 <button data-modal-target="sub-criteria-modal" data-modal-toggle="sub-criteria-modal"
                                     class="px-4 py-2 text-sm text-center font-medium inline-flex items-center rounded-md border border-amber bg-amber text-white hover:bg-white hover:text-amber hover:border hover:border-amber"
-                                    onclick="openModal('edit', {{ $item->id }}, '{{ $item->name }}')">Edit</button>
+                                    onclick="openModal('edit', {{ $item->id }}, '{{ $item->name }}', '{{ $item->criteria['id'] }}')">Edit</button>
                                 <form action="{{ route('sub-criteria.destroy', $item->id) }}" method="POST"
-                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus unit ini?');">
+                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus sub kriteria ini?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
@@ -67,7 +68,7 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-4 md:p-5">
-                    <form id="sub-criteria-form" class="space-y-4" action="" method="POST">
+                    <form id="sub-criteria-form" class="space-y-4" action="" method="">
                         @csrf
                         <div>
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Sub Kriteria</label>
@@ -76,10 +77,10 @@
                                 required />
                         </div>
                         <div>
-                            <label for="criteria" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Unit</label>
-                            <select name="criteria_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <label for="criteria" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kriteria</label>
+                            <select name="criteria_id" id="criteria_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 @foreach ($criterias as $criteria)
-                                    <option value="{{ $criteria->id }}">
+                                    <option value="{{ $criteria->id }}" >
                                         {{ $criteria->name }}
                                     </option>
                                 @endforeach

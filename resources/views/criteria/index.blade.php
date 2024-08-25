@@ -30,7 +30,7 @@
                                     class="px-4 py-2 text-sm text-center font-medium inline-flex items-center rounded-md border border-amber bg-amber text-white hover:bg-white hover:text-amber hover:border hover:border-amber"
                                     onclick="openModal('edit', {{ $item->id }}, '{{ $item->name }}')">Edit</button>
                                 <form action="{{ route('criteria.destroy', $item->id) }}" method="POST"
-                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus unit ini?');">
+                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus kriteria ini?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"

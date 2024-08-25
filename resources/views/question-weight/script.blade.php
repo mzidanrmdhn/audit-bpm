@@ -18,30 +18,36 @@
         })
     })
 
-    function openModal(action, id = null, weight = null) {
-        const modalTitle = document.getElementById('modal-title');
-        const questionWeight = document.getElementById('question-weight-form');
-        const nameInput = document.getElementById('weight');
-        const selectInput = document.querySelector('select[name="question_id"]');
+    function openModal(action, id = null, weight = null, questionId = null) {
+        const modalTitle = document.getElementById('modal-title')
+        const questionWeight = document.getElementById('question-weight-form')
+        const weightInput = document.getElementById('weight')
+        const questionSelect = document.getElementById('question_id')
 
         if (action === 'add') {
-            modalTitle.textContent = 'Tambah Data Bobot Pertanyaan';
-            questionWeight.action = "{{ route('question-weight.store') }}";
-            nameInput.value = '';
-            selectInput.value = '';
+            modalTitle.textContent = 'Tambah Data Bobot Pertanyaan'
+            questionWeight.action = "{{ route('question-weight.store') }}"
+            weightInput.value = ''
+            questionSelect.value = ''
         } else if (action === 'edit') {
-            modalTitle.textContent = 'Edit Data Bobot Pertanyaan';
-            questionWeight.action = `{{ route('question-weight.store') }}/${id}`;
-            nameInput.value = weight;
+            modalTitle.textContent = 'Edit Data Bobot Pertanyaan'
+            questionWeight.action = `{{ route('question-weight.store') }}/${id}`
+            weightInput.value = weight
+            if (questionId !== null) {
+                questionSelect.value = questionId
+            }
+            questionWeight.onsubmit = function() {
+                document.querySelector('select[name="question_id"] option:disabled').disabled = false
+            }
         }
 
         document.querySelectorAll('[data-modal-hide="question-weight-modal"]').forEach(element => {
             element.addEventListener('click', () => {
-                document.getElementById('question-weight-modal').classList.add('hidden');
-            });
-        });
+                document.getElementById('question-weight-modal').classList.add('hidden')
+            })
+        })
 
-        document.getElementById('question-weight-modal').classList.remove('hidden');
+        document.getElementById('question-weight-modal').classList.remove('hidden')
     }
 
 </script>

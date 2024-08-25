@@ -81,6 +81,15 @@ class QuestionController extends Controller
         return redirect()->route('questions.index');
     }
 
+    public function destroy($id)
+    {
+        // (new Permission($this->permission ?? null))->can("delete");
+        $unit = Questions::findOrFail($id);
+        $unit->delete();
+
+        return redirect()->route('questions.index');
+    }
+
     public function storeDumpData()
     {
         $flattenedQuestions = $this->question->flattenQuestions();

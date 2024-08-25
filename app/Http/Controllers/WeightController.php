@@ -18,7 +18,7 @@ class WeightController extends Controller
 
     public function index()
     {
-        $question = Questions::all();
+        $question = Questions::with('weights')->get();
         $weight = Weight::with('question')->get();
         return view('question-weight.index')->with([
             'data' => $weight,
@@ -34,7 +34,7 @@ class WeightController extends Controller
             ],
             [
                 'question_id' => $request->question_id,
-                'name' => $request->name,
+                'weight' => $request->weight,
             ]
         );
 

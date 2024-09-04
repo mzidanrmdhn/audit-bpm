@@ -3,6 +3,7 @@
 use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CriteriaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormulasController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\LoginController;
@@ -26,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 // Auth
 Route::get('login', [LoginController::class, 'view']);
 Route::post('login', [LoginController::class, 'authenticate']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 // Achievement
 Route::get('/capaian', [AchievementController::class, 'index'])->name('achievement.index');
@@ -35,6 +37,9 @@ Route::post('/capaian', [AchievementController::class, 'save'])->name('achieveme
 Route::get('/criteria', [CriteriaController::class, 'index'])->name('criteria.index');
 Route::post('/criteria/{id?}', [CriteriaController::class, 'store'])->name('criteria.store');
 Route::delete('/criteria/{id}', [CriteriaController::class, 'destroy'])->name('criteria.destroy');
+
+// Dashboard
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Target
 Route::get('/target', [TargetController::class, 'index'])->name('target.index');
@@ -46,7 +51,8 @@ Route::get('/generate', [FormulasController::class, 'generate'])->name('formula.
 
 // Graph
 Route::get('/grafik', [GraphController::class, 'index'])->name('grafik.index');
-Route::get('/get-grafik-data', [GraphController::class, 'getChartData']);
+Route::get('/get-grafik-data', [GraphController::class, 'getChartData'])->name('get-grafik-data');
+Route::get('print/{unit_id}', [GraphController::class, 'generatePdf'])->name('generatePdf');
 
 // Management Pertanyaan
 Route::get('/data-pertanyaan', [QuestionController::class, 'index'])->name('questions.index');
@@ -67,9 +73,10 @@ Route::delete('/manajemen-unit/{id}', [ManagementUnitController::class, 'destroy
 
 // Management User
 Route::get('/manajemen-pengguna', [ManagementUserController::class, 'index'])->name('management-user.index');
-Route::post('/manajemen-pengguna', [ManagementUserController::class, 'create'])->name('management-user.create');
-Route::put('/manajemen-pengguna/{id}', [ManagementUserController::class, 'update'])->name('management-user.update');
+Route::post('/manajemen-pengguna/{id?}', [ManagementUserController::class, 'store'])->name('management-user.store');
 Route::delete('/manajemen-pengguna/{id}', [ManagementUserController::class, 'destroy'])->name('management-user.destroy');
+Route::get('/ganti-password/{id}', [ManagementUserController::class, 'updatePasswordForm'])->name('user.changePasswordForm');
+Route::post('/ganti-password/{id}', [ManagementUserController::class, 'updatePassword'])->name('user.updatePassword');
 
 
 // Sub Criteria

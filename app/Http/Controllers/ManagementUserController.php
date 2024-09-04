@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Services\ManagementUserService;
 use Diatria\LaravelInstant\Models\Role;
 use Diatria\LaravelInstant\Traits\InstantControllerTrait;
+use Illuminate\Support\Facades\Hash;
 
 class ManagementUserController extends Controller
 {
@@ -39,43 +40,33 @@ class ManagementUserController extends Controller
         ]);
     }
 
-    public function  create(Request $request){
+    public function store(Request $request, $id = null)
+    {
         (new Permission($this->permission ?? null))->can("create");
-        $field = collect([
-            'name' => $request->name,
-            'email' => $request->email,
-            'unit_id' => $request->unit_id,
-            'role_id' => $request->role_id,
-            'password' => bcrypt(env("PASSWORD_DEFAULT", 123456))
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $id,
+            'unit_id' => 'required|exists:units,id',
+            'role_id' => 'required|exists:roles,id',
         ]);
 
-        User::create(
-            $field->toArray()
+        $updateData = [
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'unit_id' => $validatedData['unit_id'],
+            'role_id' => $validatedData['role_id']
+        ];
+        if ($request->has('password')) {
+            $updateData['password'] = bcrypt(env("PASSWORD_DEFAULT", 123456));
+        }
+
+        User::updateOrCreate(
+            ['id' => $id],
+            $updateData
         );
 
-        return redirect()->route('management-user.index');
+        return redirect()->route('management-user.index')->with('success', 'User saved successfully!');
     }
-
-    public function update(Request $request, $id) {
-
-        (new Permission($this->permission ?? null))->can("update");
-        $field = collect([
-            'name' => $request->name,
-            'email' => $request->email,
-            'unit_id' => $request->unit_id,
-            'role_id' => $request->role_id
-        ]);
-        // if ($id && $request->has('password')) {
-        //     $field->put('password', $request->password);
-        // }
-
-        User::find($id)->update(
-            $field->toArray()
-        );
-
-        return redirect()->route('management-user.index');
-    }
-
 
     public function destroy($id)
     {
@@ -83,5 +74,36 @@ class ManagementUserController extends Controller
         $user->delete();
 
         return redirect()->route('management-user.index');
+    }
+
+
+    public function updatePasswordForm($id)
+    {
+        $user = User::findOrFail($id);
+        return view('management-user.change-password', compact('user'));
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        $request->validate([
+            'old_password' => 'required|string',
+            'new_password' => 'required|string|min:6|confirmed',
+        ], [
+            'old_password.required' => 'Password lama perlu diisi',
+            'new_password.required' => 'Password baru perlu diisi',
+            'new_password.min' => 'Password baru harus terdiri dari minimal 6 karakter',
+            'new_password.confirmed' => 'Konfirmasi password tidak cocok'
+        ]);
+
+        $user = User::findOrFail($id);
+
+        if (!Hash::check($request->old_password, $user->password)) {
+            return redirect()->back()->withErrors(['old_password' => 'Password lama tidak cocok.']);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return redirect()->route('user.changePasswordForm', ['id' => $id])->with('success', 'Password berhasil diganti');
     }
 }

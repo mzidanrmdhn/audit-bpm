@@ -1,4 +1,18 @@
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const unitId = getUnitIdFromURL();
+        if (unitId) {
+            fetchChartData(unitId);
+        } else {
+            console.error('Unit ID tidak ditemukan di URL.');
+        }
+    });
+
+    function getUnitIdFromURL() {
+        const pathSegments = window.location.pathname.split('/');
+        return pathSegments[pathSegments.length - 1]; // Mendapatkan segmen terakhir dari path
+    }
+
     async function fetchChartData(unitId) {
         try {
             const response = await axios.get(`/get-grafik-data?unit_id=${unitId}`);
@@ -75,7 +89,7 @@
                     const canvasId = `allDataChart${index}`;
                     const canvasElement = document.createElement('canvas');
                     canvasElement.id = canvasId;
-                    canvasElement.className = 'h-screen';
+                    canvasElement.className = 'h-1/2';
                     allDataContainer.appendChild(canvasElement);
 
                     const ctx = canvasElement.getContext('2d');
@@ -109,45 +123,5 @@
         }
     }
 
-    // Fetch chart data on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        const unitId = document.getElementById('unit_id').value;
-        if (unitId) {
-            fetchChartData(unitId);
-        } else {
-            console.error('Unit ID tidak ditemukan.');
-        }
-    });
 
-    // Fetch chart data when unit_id dropdown changes
-    document.getElementById('unit_id').addEventListener('change', function() {
-        const unitId = this.value;
-        if (unitId) {
-            fetchChartData(unitId);
-        }
-    });
-
-    function printPage() {
-        var url = "{{ url('print', ['unit_id' => auth()->user()->unit_id]) }}";
-
-        var printWindow = window.open(url, '_blank');
-
-        printWindow.onload = function() {
-            var style = printWindow.document.createElement('style');
-            style.textContent = `
-                @media print {
-                    body {
-                        transform-origin: top left;
-                        width: 200%;
-                        height: z;
-                        margin: 0;
-                        padding: 0;
-                    }
-                }
-            `;
-            printWindow.document.head.appendChild(style);
-
-            printWindow.print();
-        };
-    }
 </script>

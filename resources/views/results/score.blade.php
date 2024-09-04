@@ -29,6 +29,41 @@
         </div>
     </div>
 
+    <div class="grid grid-cols-6 gap-3 mt-4">
+        <select id="unit_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option value="" disabled selected>Pilih Unit</option>
+            @foreach ($units as $unit)
+                <option value="{{ $unit->id }}" {{ request('unit_id') == $unit->id ? 'selected' : '' }}>
+                    {{ $unit->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 mt-4">
+        <div class="px-6 py-3 text-gray-600 bg-white rounded-lg shadow border-s-4 border-s-cerulean/75">
+            <p class="font-medium mb-2">Nilai Akreditasi</p>
+            <p class="text-3xl font-bold">{{ $accreditationScore }} <span class="text-base text-gray-400/75">/ {{ $totalMaxPredAccreditation }}</p>
+        </div>
+        <div class="col-span-2 px-6 py-3 text-gray-600 bg-white rounded-lg shadow border-s-4 border-s-whiteSmoke/75">
+            <p class="font-medium mb-2">Prakiraan Akreditasi</p>
+            <div class="grid grid-cols-2">
+                {{-- <div>
+                    <p class="text-white">persentase</p>
+                    <p class="text-3xl font-bold">{{ round(($accreditationScore / $totalMaxPredAccreditation)*100, 2) }}%</p>
+                </div> --}}
+                <div>
+                    <p class="text-xs">Status:</p>
+                    <p class="text-3xl font-bold">{{ $statusAccre }}</p>
+                </div>
+                <div>
+                    <p class="text-xs">Peringkat:</p>
+                    <p class="text-3xl font-bold">{{ $rankAccre }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="grid grid-cols-3 gap-4 mt-4">
         <div class="px-6 py-3 text-gray-600 bg-white rounded-lg shadow border-s-4 border-s-caribbean/75">
             <p class="font-medium mb-2">Terlampaui</p>
@@ -44,22 +79,15 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-6 gap-3 mt-4">
+    <div class="grid grid-cols-4 gap-3 mt-4">
         <select name="criteria_id" id="criteria_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-            <option value="" disabled selected>Tampilkan Berdasarkan Kriteria</option>
+            <option value="" disabled selected>Tampilkan berdasarkan Kriteria</option>
             @foreach ($criteria as $item)
                 <option value="{{ $item->id }}">{{ $item->name }}</option>
             @endforeach
         </select>
-        <select id="unit_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-            <option value="" disabled selected>Pilih Unit</option>
-            @foreach ($units as $unit)
-                <option value="{{ $unit->id }}" {{ request('unit_id') == $unit->id ? 'selected' : '' }}>
-                    {{ $unit->name }}
-                </option>
-            @endforeach
-        </select>
     </div>
+
     <div class="bg-white p-4 mt-3 rounded-lg shadow overflow-x-auto">
         <table id="user" class="w-screen text-center">
             <thead class="">

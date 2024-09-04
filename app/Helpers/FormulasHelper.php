@@ -31,6 +31,7 @@ class FormulasHelper
                 'D.2',
                 'D.3',
                 'D.4',
+                'IBIK-STD-05.4'
             ]
         ],
 
@@ -45,24 +46,14 @@ class FormulasHelper
 
         'formula3' => [
             'questions' => [
-                [
-                    'IBIK-STD-02.4A-N1',
-                    'IBIK-STD-02.4A-N2',
-                    'IBIK-STD-02.4A-N3',
-                    'IBIK-STD-02.4A-NDTPS',
-                ],
-                [
-                    'IBIK-STD-02.4B-NI',
-                    'IBIK-STD-02.4B-NN',
-                    'IBIK-STD-02.4B-NW',
-                ]
+                'IBIK-STD-02.4A',
+                'IBIK-STD-02.4B',
             ],
         ],
 
         'formula4' => [
             'questions' => [
-                'IBIK-STD-03.1-JP',
-                'IBIK-STD-03.1-JPL'
+                'IBIK-STD-03.1'
             ]
         ],
 
@@ -70,75 +61,63 @@ class FormulasHelper
             'questions' => [
                 [
                     'IBIK-STD-03.2A',
-                    'IBIK-STD-03.2B-NMA',
-                    'IBIK-STD-03.2B-NMD',
+                    'IBIK-STD-03.2B'
                 ]
             ]
         ],
 
         'formula6' => [
-            'questions' => ['IBIK-STD-04.1-NDTPS']
+            'questions' => ['IBIK-STD-04.1']
         ],
 
         'formula7' => [
             'questions' => [
-                'IBIK-STD-04.2-NDS3',
-                'IBIK-STD-04.2-NDTPS'
+                'IBIK-STD-04.2'
             ]
         ],
 
         'formula8' => [
             'questions' => [
-                'IBIK-STD-04.3-NDGB',
-                'IBIK-STD-04.3-NDLK',
-                'IBIK-STD-04.3-NDL',
-                'IBIK-STD-04.3-NDTPS'
+                'IBIK-STD-04.3'
             ]
         ],
 
+        // ubah
         'formula9' => [
             'questions' => [
-                'IBIK-STD-04.4-NM',
-                'IBIK-STD-04.4-NDTPS',
+                'IBIK-STD-04.4'
             ]
         ],
 
+        // ubah
         'formula10' => [
-            'questions' => ['IBIK-STD-04.5-RDPU']
+            'questions' => ['IBIK-STD-04.5']
         ],
 
+        // ubah
         'formula11' => [
-            'questions' => ['IBIK-STD-04.6-REWMP']
+            'questions' => ['IBIK-STD-04.6']
         ],
 
+        // ubah
         'formula12' => [
             'questions' => [
-                'IBIK-STD-04.7-NDTT',
-                'IBIK-STD-04.7-NDT'
+                'IBIK-STD-04.7'
             ]
         ],
 
+        // ubah
         'formula13' => [
             'questions' => [
-                'IBIK-STD-04.8-NRD',
-                'IBIK-STD-04.8-NDTPS'
+                'IBIK-STD-04.8'
             ]
         ],
 
+        // ubah
         'formula14' => [
             'questions' => [
-                [
-                    'IBIK-STD-04.9-NI',
-                    'IBIK-STD-04.9-NN',
-                    'IBIK-STD-04.9-NL',
-                    'IBIK-STD-04.9-NTPS',
-                ],
-                [
-                    'IBIK-STD-04.10-NI',
-                    'IBIK-STD-04.10-NN',
-                    'IBIK-STD-04.10-NL',
-                    'IBIK-STD-04.10-NTPS',
-                ],
+                [ 'IBIK-STD-04.9' ],
+                [ 'IBIK-STD-04.10' ],
             ]
         ],
 
@@ -176,9 +155,9 @@ class FormulasHelper
             'questions' => ['IBIK-STD-05.3']
         ],
 
-        'formula23' => [
-            'questions' => ['IBIK-STD-05.4']
-        ],
+        // 'formula23' => [
+            // 'questions' => ['IBIK-STD-05.4']
+        // ],
 
         'formula24' => [
             'questions' => [

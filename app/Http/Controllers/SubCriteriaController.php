@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Criteria;
 use App\Utils\Permission;
 use App\Models\SubCriteria;
-use App\Utils\Permission;
 use Illuminate\Http\Request;
 
 class SubCriteriaController extends Controller

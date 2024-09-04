@@ -2,11 +2,6 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
-use App\Models\Target;
-use App\Utils\Permission;
-use App\Models\Achievement;
-=======
 use App\Helpers\QuestionsHelper;
 use App\Models\Achievement;
 use App\Models\Criteria;
@@ -14,9 +9,7 @@ use App\Models\Questions;
 use App\Models\Target;
 use App\Models\SubCriteria;
 use App\Utils\Permission;
->>>>>>> upstream/main
 use Illuminate\Http\Request;
-use App\Helpers\QuestionsHelper;
 use Illuminate\Support\Facades\Auth;
 
 class AchievementController extends Controller
@@ -43,16 +36,11 @@ class AchievementController extends Controller
             return $question->subCriteria->criteria->name;
         });
 
-<<<<<<< HEAD
-        $answers = Achievement::where('unit_id', 1)->get()->keyBy('question_id');
-        $target = Target::where('unit_id', 1)->get()->keyBy('question_id');
-=======
         $criteriaKeys = Criteria::all();
         $currentCriteria = $criteriaKeys[$index];
 
         $answers = Achievement::where('unit_id', Auth::user()->unit_id)->get()->keyBy('question_id');
         $target = Target::where('unit_id', Auth::user()->unit_id)->get()->keyBy('question_id');
->>>>>>> upstream/main
 
         $parsedAnswers = [];
         foreach ($answers as $answer) {
@@ -79,25 +67,11 @@ class AchievementController extends Controller
         if (isset($data['answers'])) {
             foreach ($data['answers'] as $questionId => $answer) {
                 if (is_array($answer)) {
-<<<<<<< HEAD
-                    foreach ($answer as $subKey => $subAnswer) {
-                        if ($subAnswer !== null) {
-                            Achievement::updateOrCreate(
-                                [
-                                    'unit_id' => 1,
-                                    'question_id' => $questionId . '-' . $subKey
-                                ],
-                                [
-                                    'achieve_answer' => $subAnswer
-                                ]
-                            );
-=======
                     $jsonAnswer = [];
 
                     foreach ($answer as $label => $value) {
                         if ($value !== null) {
                             $jsonAnswer[$label] = $value;
->>>>>>> upstream/main
                         }
                     }
 

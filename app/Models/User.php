@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\ActivityLog;
 use Diatria\LaravelInstant\Models\Role;
 use Illuminate\Notifications\Notifiable;
 use Diatria\LaravelInstant\Models\RolePermission;
@@ -39,6 +40,11 @@ class User extends Authenticatable
 
     public function role() {
         return $this->belongsTo(Role::class);
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(ActivityLog::class, 'user_id');
     }
 
     public function permissions(): Attribute

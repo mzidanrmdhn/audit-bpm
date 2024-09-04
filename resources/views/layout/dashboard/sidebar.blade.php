@@ -11,7 +11,7 @@
     <div class="overflow-y-auto py-2 px-3 h-full bg-caribbean dark:bg-gray-800">
         <ul class="space-y-2">
             <li>
-                <a href="#"
+                <a href="{{ route('dashboard') }}"
                     class="flex items-center p-2 text-sm font-medium text-white rounded-lg dark:text-white hover:bg-gray-100 hover:text-jet dark:hover:bg-gray-700 group">
                     <svg aria-hidden="true"
                         class="w-5 h-5 text-white transition duration-75 dark:text-gray-400 group-hover:text-jet dark:group-hover:text-jet"
@@ -38,7 +38,7 @@
                             clip-rule="evenodd"></path>
                     </svg>
                 </button>
-                <ul id="dropdown-pages" class="hidden py-2 space-y-2">
+                <ul id="dropdown-pages" class="py-2 space-y-2">
                     <li>
                         <a href="{{ url('/target') }}"
                             class="{{ request()->is('target') ? 'bg-gray-100 text-jet' : 'text-white' }} flex items-center p-2 pl-11 w-full text-sm font-medium rounded-lg transition duration-75 group hover:bg-gray-100 hover:text-jet dark:text-white dark:hover:bg-gray-700">Form Target</a>
@@ -116,10 +116,7 @@
                     class="{{ request()->is('manajemen-pengguna') ? 'bg-gray-100 text-jet' : 'text-white'}} flex items-center p-2 text-sm font-medium rounded-lg dark:text-white hover:bg-gray-100 hover:text-jet dark:hover:bg-gray-700 group">
                     <svg class="w-6 h-6 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                         <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
-<<<<<<< HEAD
                     </svg>
-=======
->>>>>>> upstream/main
                     <span class="ml-3">Manajemen Pengguna</span>
                 </a>
             </li>
@@ -152,24 +149,20 @@
             <li>
                 <a href="{{ route('questions.index') }}"
                     class="{{ request()->is('data-pertanyaan') ? 'bg-gray-100 text-jet' : 'text-white'}} flex items-center p-2 text-sm font-medium rounded-lg dark:text-white hover:bg-gray-100 hover:text-jet dark:hover:bg-gray-700 group">
-                    <svg aria-hidden="true"
-                        class="w-5 h-5 transition duration-75 dark:text-gray-400 group-hover:text-jet dark:group-hover:text-jet"
-                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                        <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                    </svg>
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.556 8.5h8m-8 3.5H12m7.111-7H4.89a.896.896 0 0 0-.629.256.868.868 0 0 0-.26.619v9.25c0 .232.094.455.26.619A.896.896 0 0 0 4.89 16H9l3 4 3-4h4.111a.896.896 0 0 0 .629-.256.868.868 0 0 0 .26-.619v-9.25a.868.868 0 0 0-.26-.619.896.896 0 0 0-.63-.256Z"/>
+                      </svg>
+
                     <span class="ml-3">Master Data Pertanyaan</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('question-weight.index') }}"
                     class="{{ request()->is('bobot') ? 'bg-gray-100 text-jet' : 'text-white'}} flex items-center p-2 text-sm font-medium rounded-lg dark:text-white hover:bg-gray-100 hover:text-jet dark:hover:bg-gray-700 group">
-                    <svg aria-hidden="true"
-                        class="w-5 h-5 transition duration-75 dark:text-gray-400 group-hover:text-jet dark:group-hover:text-jet"
-                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                        <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                    </svg>
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 4a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm-2.952.462c-.483.19-.868.432-1.19.71-.363.315-.638.677-.831.93l-.106.14c-.21.268-.36.418-.574.527C6.125 6.883 5.74 7 5 7a1 1 0 0 0 0 2c.364 0 .696-.022 1-.067v.41l-1.864 4.2a1.774 1.774 0 0 0 .821 2.255c.255.133.538.202.825.202h2.436a1.786 1.786 0 0 0 1.768-1.558 1.774 1.774 0 0 0-.122-.899L8 9.343V8.028c.2-.188.36-.38.495-.553.062-.079.118-.15.168-.217.185-.24.311-.406.503-.571a1.89 1.89 0 0 1 .24-.177A3.01 3.01 0 0 0 11 7.829V20H5.5a1 1 0 1 0 0 2h13a1 1 0 1 0 0-2H13V7.83a3.01 3.01 0 0 0 1.63-1.387c.206.091.373.19.514.29.31.219.532.465.811.78l.025.027.02.023v1.78l-1.864 4.2a1.774 1.774 0 0 0 .821 2.255c.255.133.538.202.825.202h2.436a1.785 1.785 0 0 0 1.768-1.558 1.773 1.773 0 0 0-.122-.899L18 9.343v-.452c.302.072.633.109 1 .109a1 1 0 1 0 0-2c-.48 0-.731-.098-.899-.2-.2-.12-.363-.293-.651-.617l-.024-.026c-.267-.3-.622-.7-1.127-1.057a5.152 5.152 0 0 0-1.355-.678 3.001 3.001 0 0 0-5.896.04Z" clip-rule="evenodd"/>
+                      </svg>
+
                     <span class="ml-3">Master Data Bobot</span>
                 </a>
             </li>
@@ -177,12 +170,10 @@
             <li class="py-3">
                 <a href="{{ route('performance-unit.index') }}"
                     class="{{ request()->is('performance-unit') ? 'bg-gray-100 text-jet' : 'text-white'}} flex items-center p-2 text-sm font-medium rounded-lg dark:text-white hover:bg-gray-100 hover:text-jet dark:hover:bg-gray-700 group">
-                    <svg aria-hidden="true"
-                        class="w-5 h-5 transition duration-75 dark:text-gray-400 group-hover:text-jet dark:group-hover:text-jet"
-                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                        <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                    </svg>
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-width="2" d="M3 11h18m-9 0v8m-8 0h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z"/>
+                      </svg>
+
                     <span class="ml-3">Evaluasi Kinerja Unit</span>
                 </a>
             </li>

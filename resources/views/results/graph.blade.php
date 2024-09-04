@@ -3,6 +3,26 @@
 @section('content')
     <div class="flex flex-row justify-between items-center pb-3">
         <p class="text-xl font-bold text-gray-600 whitespace-nowrap">Laporan Penilaian Unit</p>
+        <a href="{{ route('generatePdf',  ['unit_id' => auth()->user()->unit_id]) }}"
+            class="px-4 py-2 text-sm text-center font-medium inline-flex items-center rounded-md bg-caribbean text-white hover:bg-white hover:text-teal hover:border hover:border-teal">
+            <svg class="w-5 h-5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M16.444 18H19a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.556M17 11V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v6h10ZM7 15h10v4a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-4Z"/>
+              </svg>
+            <p>Cetak Laporan</p>
+        </a>
+    </div>
+    <div class="flex flex-row gap-3 mt-4">
+        <form method="GET" action="{{ route('grafik.index') }}">
+            <label for="unit_id" class="text-sm font-medium text-gray-700">Pilih Unit:</label>
+            <select id="unit_id" name="unit_id" class="mt-1 text-sm border-gray-300 rounded-md shadow-sm sm:text-sm">
+                @foreach ($units as $unit)
+                    <option value="{{ $unit->id }}" {{ request('unit_id') == $unit->id ? 'selected' : '' }}>
+                        {{ $unit->name }}
+                    </option>
+                @endforeach
+            </select>
+            <button type="submit" class="mt-1 text-sm px-4 py-2 bg-smokeWhite text-caribbean border border-caribbean rounded-md">Tampilkan</button>
+        </form>
     </div>
 
     <div class="grid 2xl:grid-cols-2 grid-cols-1 gap-5 pb-3 max-h-min">

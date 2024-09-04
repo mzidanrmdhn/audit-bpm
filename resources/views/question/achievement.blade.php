@@ -53,6 +53,9 @@
                                                 <div class="block">
                                                     <div class="w-full whitespace-pre-wrap">{{ $choice->description }}</div>
                                                 </div>
+                                                @if (isset($target[$question->id]) && $target[$question->id]->target_answer == $choice->value)
+                                                    <span class="bg-red-700 text-white text-xs font-medium inline-flex items-center px-3 py-0.5 rounded border">Target</span>
+                                                @endif
                                             </label>
                                         </li>
                                     @endforeach

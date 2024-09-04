@@ -73,24 +73,32 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-4 md:p-5">
+                    @if ($errors->any())
+                        <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li class="list-disc list-inside">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form id="user-form" action="" method="POST">
-                        @method('PUT')
                         @csrf
-                        <div>
+                        <div class="mb-4">
                             <label for="name"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
                             <input type="text" name="name" id="name"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                 required />
                         </div>
-                        <div>
+                        <div class="mb-4">
                             <label for="email"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                             <input type="text" name="email" id="email"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                 required />
                         </div>
-                        <div>
+                        <div class="mb-4">
                             <label for="unit_id"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Unit</label>
                             <select name="unit_id" id="unit_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
@@ -99,7 +107,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div>
+                        <div class="mb-4">
                             <label for="role_id"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
                             <select name="role_id" id="role_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">

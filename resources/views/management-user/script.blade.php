@@ -26,20 +26,17 @@
         const emailInput = document.getElementById('email');
         const unitInput = document.getElementById('unit_id');
         const roleInput = document.getElementById('role_id');
-        const methodInput = document.querySelector('input[name="_method"]');
 
         if (action === 'add') {
             modalTitle.textContent = 'Tambah Data User';
-            userForm.action = "{{ route('management-user.create') }}";  // Gunakan rute store
-            if (methodInput) methodInput.remove();
+            userForm.action = "{{ route('management-user.store') }}";
             nameInput.value = '';
             emailInput.value = '';
             unitInput.value = '';
             roleInput.value = '';
         } else if (action === 'edit') {
             modalTitle.textContent = 'Edit Data User';
-            userForm.method = "PUT"
-            userForm.action = `{{ url('manajemen-pengguna/') }}/${id}`;
+            userForm.action = `{{ route('management-user.store') }}/${id}`;
             nameInput.value = name;
             emailInput.value = email;
             if (unitId !== null || roleId !== null) {
@@ -47,7 +44,6 @@
                 roleInput.value = roleId;
             }
         }
-
         document.querySelectorAll('[data-modal-hide="user-modal"]').forEach(element => {
             element.addEventListener('click', () => {
                 document.getElementById('user-modal').classList.add('hidden');
@@ -56,6 +52,4 @@
 
         document.getElementById('user-modal').classList.remove('hidden');
     }
-
-
 </script>

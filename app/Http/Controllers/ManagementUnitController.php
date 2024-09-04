@@ -6,11 +6,6 @@ use App\Models\Unit;
 use App\Utils\Permission;
 use Illuminate\Http\Request;
 use App\Models\ManagementUnit;
-<<<<<<< HEAD
-=======
-use App\Models\Unit;
-use App\Utils\Permission;
->>>>>>> upstream/main
 
 class ManagementUnitController extends Controller
 {

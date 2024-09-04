@@ -77,6 +77,7 @@
                                 @endif
                             </td>
                             <td class="border border-gray-400 p-2"></td>
+                            <td class="border border-gray-400 p-2"></td>
                             <td class="border border-gray-400 p-2">
                                 <button type="submit" class="border-0 bg-caribbean text-white rounded-lg p-2 w-full">Simpan</button>
                             </td>
@@ -93,16 +94,9 @@
                                     <a href="{{ asset('storage/' . $item->document) }}" class="text-blue-500" target="_blank">View Document</a>
                                 @endif
                             </td>
-<<<<<<< HEAD
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-=======
->>>>>>> upstream/main
                             <td class="border border-gray-400 p-2 text-center"></td>
                             <td class="border border-gray-400 p-2"></td>
                             <td class="border border-gray-400 p-2">
-                                @if ($role_name === 'Unit' || $role_name == 'Super Admin')
                                 <select onchange="actions(this, '{{ $item->id }}')" class="rounded-lg border-caribbean/50 text-sm focus:ring-caribbean">
                                     <option value="" selected>Aksi</option>
                                     <option value="add_above">Add Above</option>
@@ -110,7 +104,6 @@
                                     <option value="edit_id">Edit</option>
                                     <option value="hapus_id">Hapus</option>
                                 </select>
-                                @endif
                             </td>
                         </tr>
                     @endif
@@ -164,10 +157,6 @@
             var action = event.value;
             if (action === 'hapus_id') {
                 if (confirm('Yakin ingin menghapus?')) {
-<<<<<<< HEAD
-=======
-                    document.getElementById('delete-form-' + id).submit();
->>>>>>> upstream/main
                     axios.delete(`performance-unit/${id}`)
                         .then(function() {
                             location.reload()

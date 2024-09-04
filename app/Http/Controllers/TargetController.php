@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
-use App\Models\Target;
-use App\Utils\Permission;
-=======
 use App\Helpers\QuestionsHelper;
 use App\Models\Achievement;
 use App\Models\Criteria;
@@ -13,10 +9,7 @@ use App\Models\Questions;
 use App\Models\Target;
 use App\Utils\Permission;
 use Illuminate\Http\Request;
->>>>>>> upstream/main
 use Illuminate\Support\Arr;
-use Illuminate\Http\Request;
-use App\Helpers\QuestionsHelper;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,9 +38,6 @@ class TargetController extends Controller
             return $question->subCriteria->criteria->name;
         });
 
-<<<<<<< HEAD
-        $answers = Target::where('unit_id', 1)->get()->keyBy('question_id');
-=======
         $criteriaKeys = Criteria::all();
         $currentCriteria = $criteriaKeys[$index];
 
@@ -58,7 +48,6 @@ class TargetController extends Controller
         foreach ($target as $answer) {
             $parsedAnswers[$answer->question_id] = json_decode($answer->target_answer, true);
         }
->>>>>>> upstream/main
 
         return view('question.target', [
             'questions' => $groupedQuestion[$currentCriteria->name],

@@ -77,10 +77,6 @@ class PerformanceUnitController extends Controller
         if ($request->hasFile('document')) {
             $documentPath = $request->file('document')->store('documents', 'public');
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> upstream/main
         PerformanceUnit::create([
             'work_planning' => $request->work_planning,
             'unit_id' => Auth::user()->unit_id,
@@ -100,13 +96,8 @@ class PerformanceUnitController extends Controller
         $documentPath = $performanceUnit->document;
         if ($request->hasFile('document')) {
             // Delete the old document if it exists
-<<<<<<< HEAD
-            if ($documentPath && \Storage::exists('public/' . $documentPath)) {
-                \Storage::delete('public/' . $documentPath);
-=======
             if ($documentPath && Storage::exists('public/' . $documentPath)) {
                 Storage::delete('public/' . $documentPath);
->>>>>>> upstream/main
             }
             // Store the new document
             $documentPath = $request->file('document')->store('documents', 'public');
